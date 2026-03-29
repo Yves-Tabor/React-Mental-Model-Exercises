@@ -2,6 +2,7 @@ import Counter from './Components/closureBug'
 import Logger from './Components/effectDependency'
 import Infinite from './Components/infiniteEffectLoop'
 import Search from './Components/objectDependency'
+import Cart from './Components/derivedState'
 
 function App() {
 
@@ -13,7 +14,8 @@ function App() {
       <br />
       <Logger />
       {/* <Infinite /> */}
-      <Search />
+      {/* <Search />
+      <Cart /> */}
     </>
   )
 }

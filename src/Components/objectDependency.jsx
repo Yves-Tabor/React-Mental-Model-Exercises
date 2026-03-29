@@ -18,14 +18,19 @@ import React from "react";
 // - Why does this refetch on every render?
 // - Fix it without removing necessary dependencies.
 
-function Search({ query }) {
+export default function Search({ query }) {
 const [results, setResults] = React.useState([]);
 
-const options = { query };
+// const options = { query };
+const options = React.useMemo(() => 
+        {
+            console.log("Query changed:", query);
+            return { query };
+        }, [query])
 
 React.useEffect(() => {
-fetch("https://dummyjson.com/posts", {
-     method: "POST", 
+fetch("https://jsonplaceholder.typicode.com/posts", {
+     method: "POST",
      body: JSON.stringify(options) 
     })
 .then(res => res.json())
@@ -36,4 +41,8 @@ return <div>
         {results.length}
        </div>;
 }
-export default Search;
+
+// Comments:
+// The issue is that the options object is created on every render, causing the dependency array to detect a change and refetch.
+// To fix it we use the hook useMemo to memoize the options object, it means the options is recreated only if the query has really changed. 
+// Or you can simply fix it by replacing the options object with the query directly in the dependency array to avoi the object reference issue.
